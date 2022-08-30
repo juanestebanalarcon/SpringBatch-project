@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableBatchProcessing
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         "com.jeam.springbatch.springbatchfirstproject.writer",
         "com.jeam.springbatch.springbatchfirstproject.controller"})
 @EnableAsync
+@EnableScheduling
 public class SpringBatchFirstProjectApplication {
 
     public static void main(String[] args) {

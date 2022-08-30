@@ -6,7 +6,10 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.JobParametersInvalidException;
+import org.springframework.batch.core.launch.JobExecutionNotRunningException;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
+import org.springframework.batch.core.launch.NoSuchJobExecutionException;
 import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
 import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
 import org.springframework.batch.core.repository.JobRestartException;
@@ -24,12 +27,25 @@ public class JobController {
 
     @Autowired
     JobService jobService;
+    //@Autowired
+    JobOperator jobOperator;
 
     @GetMapping("/start/{jobName}")
     public String startJob(@PathVariable String jobName,
                            @RequestBody List<JobParamsRequest>jobParamsRequests) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException, JobParametersInvalidException, JobRestartException {
         jobService.startJob(jobName,jobParamsRequests);
         return "Job Started "+jobName;
+    }
+    @GetMapping("/stop/{executionId}")
+    public String stopJob(@PathVariable Long executionid) throws NoSuchJobExecutionException, JobExecutionNotRunningException {
+       try{
+        jobOperator.stop(executionid);
+       }catch (Exception e){
+           e.printStackTrace();
+       }
+
+        return "Job Stopped... ";
+
     }
 
 }
