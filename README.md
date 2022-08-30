@@ -16,3 +16,11 @@ A Job:
     - ItemReader, ItemWriter: mandatory.
     - ItemProcessor: Optional
 * CronMaker: http://www.cronmaker.com/
+
+### Flat File - Item Reader
+
+- Source location or CSV File.
+- Line Mapper:
+  - delimiter
+  - column headers
+  - Line tokenizer, bean mapper.
