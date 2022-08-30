@@ -13,4 +13,5 @@ A Job:
         It can runs again if execution was failed
       - Successfully / failed
     - A job can have multiple **Steps**
-    - 
+    - ItemReader, ItemWriter: mandatory.
+    - ItemProcessor: Optional

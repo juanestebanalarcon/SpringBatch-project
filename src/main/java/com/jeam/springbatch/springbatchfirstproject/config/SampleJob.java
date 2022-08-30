@@ -2,8 +2,11 @@ package com.jeam.springbatch.springbatchfirstproject.config;
 
 import  com.jeam.springbatch.springbatchfirstproject.listener.FirstJobListener;
 import  com.jeam.springbatch.springbatchfirstproject.listener.firstStepListener;
+import com.jeam.springbatch.springbatchfirstproject.processor.FirstItemProcessor;
+import com.jeam.springbatch.springbatchfirstproject.reader.FirstItemReader;
 import com.jeam.springbatch.springbatchfirstproject.service.FirstTasklet;
 import com.jeam.springbatch.springbatchfirstproject.service.SecondTasklet;
+import com.jeam.springbatch.springbatchfirstproject.writer.FirstItemWriter;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.StepContribution;
@@ -21,6 +24,12 @@ import org.springframework.context.annotation.Configuration;
 public class SampleJob {
 
     @Autowired
+    private FirstItemReader firstItemReader;
+    @Autowired
+    private FirstItemProcessor firstItemProcessor;
+    @Autowired
+    private FirstItemWriter firstItemWriter;
+    @Autowired
     private SecondTasklet secondTask;
     @Autowired
     private FirstTasklet firstTask;
@@ -35,7 +44,7 @@ public class SampleJob {
     @Autowired
     firstStepListener FirstStepListener;
 
-  //  @Bean
+  @Bean
     public Job firstJob(){
       return jobBuilderFactory.get("First_Job")
               .incrementer(new RunIdIncrementer())
@@ -75,7 +84,18 @@ public class SampleJob {
 @Bean
 public Job secondJob(){
         return jobBuilderFactory.get("Second job").incrementer(new RunIdIncrementer())
+                .start(firstJunkStep())
+                .next(secondStep())
                 .build();
 }
+    private Step firstJunkStep(){
+        return   stepBuilderFactory.get("first junk step")
+                //3 registros
+                .<Integer,Long>chunk(3)
+                .reader(firstItemReader)
+                .processor(firstItemProcessor)
+                .writer(firstItemWriter)
+                .build();
+    }
 
 }
