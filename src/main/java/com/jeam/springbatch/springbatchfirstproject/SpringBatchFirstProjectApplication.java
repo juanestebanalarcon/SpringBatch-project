@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
         "com.jeam.springbatch.springbatchfirstproject.writer",
         "com.jeam.springbatch.springbatchfirstproject.controller"})
 @EnableAsync
-@EnableScheduling
+//@EnableScheduling
 public class SpringBatchFirstProjectApplication {
 
     public static void main(String[] args) {
