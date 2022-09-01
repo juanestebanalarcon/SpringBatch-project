@@ -25,4 +25,5 @@ public class StudentJson {
                 ", email='" + email + '\'' +
                 '}';
     }
+    public StudentJson(){}
 }
